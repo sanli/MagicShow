@@ -16,8 +16,18 @@ class ChromeCtl:
     def startChrome(self):
         opts = webdriver.ChromeOptions()
         opts.add_argument("kiosk")
-        self.driver = webdriver.Chrome('./chromedriver', chrome_options=opts)
-        self.show_content("1.pdf")
+        
+        #判断操作系统
+        import platform
+        osname = platform.uname()[0] 
+        if( osname == "Windows"):  # windows 系统
+            self.driver = webdriver.Chrome('./chromedriver.exe', chrome_options=opts)
+        elif( osname == "Darwin"):  # MacOS 系统
+            self.driver = webdriver.Chrome('./chromedriver', chrome_options=opts)
+        else:
+            self.driver = webdriver.Chrome('./chromedriver.exe', chrome_options=opts)
+            
+        self.show_content("cover.html")
     
     def stopChrome(self):
         self.driver.close()
